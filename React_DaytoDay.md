@@ -957,3 +957,247 @@ useMemo
 React List and
 
 React Forms
+
+
+============================================================================================================================
+
+Redux and its role in managing global state in React applications.
+
+
+	• What is Redux and when to use it?
+	• Redux is a state management library for JavaScript applications.
+	• Used when:
+		○ Multiple components need access to shared state.
+		○ State changes in a predictable way.
+		○ Application scales and requires better state management.
+	• Setting up Redux in a React project
+	• Install dependencies:
+
+	npm install @reduxjs/toolkit react-redux
+	
+	Actions, Reducers, and the Redux Store
+		• Actions: Objects that describe changes in the state.
+		• Reducers: Functions that handle state updates based on actions.
+		• Store: Centralized location for managing state.
+	
+	
+	Example :
+	
+	
+	Create a Basic Counter App using Redux
+	
+	// src/redux/counterSlice.js
+	import { createSlice } from '@reduxjs/toolkit';
+	
+	const counterSlice = createSlice({
+	  name: 'counter',
+	  initialState: { count: 0 },
+	  reducers: {
+	    increment: (state) => {
+	      state.count += 1;
+	    },
+	    decrement: (state) => {
+	      state.count -= 1;
+	    }
+	  }
+	});
+	
+	export const { increment, decrement } = counterSlice.actions;
+	export default counterSlice.reducer;
+	
+	
+	Create a Redux Store
+	
+	// src/redux/store.js
+	import { configureStore } from '@reduxjs/toolkit';
+	import counterReducer from './counterSlice';
+	
+	const store = configureStore({
+	  reducer: {
+	    counter: counterReducer
+	  }
+	});
+	
+	export default store;
+	
+	
+	Connect the Store to the App (Wrap the app in <Provider> to make Redux state available.)
+	
+	// src/index.js
+	import React from 'react';
+	import ReactDOM from 'react-dom';
+	import { Provider } from 'react-redux';
+	import store from './redux/store';
+	import App from './App';
+	
+	ReactDOM.render(
+	  <Provider store={store}>
+	    <App />
+	  </Provider>,
+	  document.getElementById('root')
+	);
+	
+	
+	Use useSelector and useDispatch in Components
+	
+	// src/components/Counter.js
+	import React from 'react';
+	import { useSelector, useDispatch } from 'react-redux';
+	import { increment, decrement } from '../redux/counterSlice';
+	
+	const Counter = () => {
+	  const count = useSelector((state) => state.counter.count);
+	  const dispatch = useDispatch();
+	
+	  return (
+	    <div>
+	      <h1>Counter: {count}</h1>
+	      <button onClick={() => dispatch(increment())}>Increment</button>
+	      <button onClick={() => dispatch(decrement())}>Decrement</button>
+	    </div>
+	  );
+	};
+	
+	export default Counter;
+	
+	
+	Use the Counter Component in App.js
+	
+	// src/App.js
+	import React from 'react';
+	import Counter from './components/Counter';
+	
+	const App = () => {
+	  return (
+	    <div>
+	      <h2>Redux Counter App</h2>
+	      <Counter />
+	    </div>
+	  );
+	};
+	
+	export default App;
+	
+	
+	       (1) UI Dispatches Action
+	                ⬇
+	        ┌───────────────────┐
+	        │      Action       │   (Plain JS Object describing an event)
+	        └───────────────────┘
+	                ⬇
+	        ┌───────────────────┐
+	        │      Reducer      │   (Pure function that updates state based on action)
+	        └───────────────────┘
+	                ⬇
+	        ┌───────────────────┐
+	        │       Store       │   (Holds the application state)
+	        └───────────────────┘
+	                ⬇
+	        ┌───────────────────┐
+	        │       UI         │   (Re-renders based on new state)
+	        └───────────────────┘
+	
+	
+	• UI (Component) → A user interacts with the application (e.g., clicks a button).
+	• Dispatch an Action → The UI sends an action (like { type: "INCREMENT" }).
+	• Reducer Processes Action → The reducer function updates the state based on the action.
+	• State Updates in Store → The Redux store holds the updated state.
+	• UI Re-renders → The updated state triggers a UI update.
+
+
+We can use it for asynchronous operations like API calls in Redux
+
+=============================================================================================================================================================
+
+	React Testing :  
+	
+	
+	Test React components using Jest and React Testing Library (RTL).
+	
+	• Setting Up Jest and React Testing Library
+		• Installing Jest and React Testing Library.
+		• Configuring Jest for a React project.
+		• Running tests with npm test.
+	• Writing Unit Tests for Components
+		• Testing functional components.
+		• Using screen, getByText, getByRole, etc.
+		• Simulating user interactions with fireEvent and userEvent.
+	• Mocking Functions and API Calls
+		• Mocking button click handlers.
+		• Mocking API calls using jest.fn() and jest.mock().
+
+
+	1. Install Jest and React Testing Library
+	Run the following command to install Jest and RTL:
+	
+	npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event
+	
+	
+	Ensure your package.json has the following Jest configuration:
+	
+	"scripts": {
+	  "test": "react-scripts test"
+	}
+	
+	
+	Write Tests for a Counter Component
+	
+	Create a Counter Component
+	
+	// src/components/Counter.js
+	import React, { useState } from 'react';
+	
+	const Counter = () => {
+	  const [count, setCount] = useState(0);
+	
+	  return (
+	    <div>
+	      <h2>Counter: {count}</h2>
+	      <button onClick={() => setCount(count + 1)}>Increment</button>
+	      <button onClick={() => setCount(count - 1)}>Decrement</button>
+	    </div>
+	  );
+	};
+	
+	export default Counter;
+	
+	
+	Write Tests for the Counter Component
+	
+	// src/tests/Counter.test.js
+	import { render, screen, fireEvent } from '@testing-library/react';
+	import Counter from '../components/Counter';
+	
+	test('renders counter with initial value', () => {
+	  render(<Counter />);
+	  const counterText = screen.getByText(/Counter: 0/i);
+	  expect(counterText).toBeInTheDocument();
+	});
+	
+	test('increments counter when "Increment" button is clicked', () => {
+	  render(<Counter />);
+	  const button = screen.getByText(/Increment/i);
+	  fireEvent.click(button);
+	  expect(screen.getByText(/Counter: 1/i)).toBeInTheDocument();
+	});
+	
+	test('decrements counter when "Decrement" button is clicked', () => {
+	  render(<Counter />);
+	  const button = screen.getByText(/Decrement/i);
+	  fireEvent.click(button);
+	  expect(screen.getByText(/Counter: -1/i)).toBeInTheDocument();
+	});
+	
+	
+	Run the Tests
+	
+	Run the following command in the terminal:
+	
+	npm test    (This will execute all test files inside the src/tests/ directory.)
+	
+	
+	Tests for a Counter component:
+		• Verified the initial state.
+		• Tested increment and decrement buttons.
+
+===============================================================================================================================================================================
