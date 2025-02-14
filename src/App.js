@@ -1,35 +1,16 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./components/header";
 
 function App() {
-    const [projects, setProjects] = useState([]);
-
-    useEffect(() => {
-        // Fetch data from the Python backend
-        axios.get("http://localhost:5000/api/projects")
-            .then((response) => {
-                setProjects(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    }, []);
-
-    return (
-        <div style={{ padding: "20px" }}>
-            <h1>Project Info</h1>
-            <ul>
-                {projects.map((project) => (
-                    <li key={project.ID}>
-                        <strong>{project.Project_Title}</strong> - 
-                        Part Numbers: {project.PartNumbers} | 
-                        Status: {project.Proj_Status} | 
-                        Action: {project.Action}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  const [user, setUser] = useState("Shirisha");
+  
+  return (
+    <div>
+      <Header appName="Project Manager" pageName="Home" userName={user} />
+      <h1>Welcome to the Dashboard</h1>
+    </div>
+  );
 }
 
 export default App;
