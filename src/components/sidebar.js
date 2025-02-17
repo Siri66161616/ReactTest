@@ -1,0 +1,50 @@
+import React, { useState } from "react";
+import { Container, Nav, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "../pages/Home1";
+import Admin1 from "../pages/Admin1";
+import Feedback from "../pages/Feed";
+import Design from "../pages/Design1";
+
+
+const Sidebar = () => {
+  const navigate = useNavigate();
+  const [selected, setSelected] = useState(null);
+
+  const handleNavigation = (path, index) => {
+    setSelected(index);
+    navigate(path);
+  };
+
+  return (
+    <Container fluid className="d-flex p-0" style={{ height: "100vh" }}>
+      <Nav className="flex-column bg-dark p-3" style={{ width: "200px" }}>
+        {[
+          { name: "Home", path: "/Home1" },
+          { name: "Design", path: "/Design1" },
+          { name: "VPD", path: "", disabled: true },
+          { name: "Admin", path: "/Admin1" },
+          { name: "Feed", path: "/Feed" },
+        ].map((item, index) => (
+          <Button
+            key={index}
+            onClick={() => !item.disabled && handleNavigation(item.path, index)}
+            style={{
+              backgroundColor: selected === index ? "#808080" : "#FFCC00",
+              borderColor: selected === index ? "#808080" : "#FFCC00",
+            }}
+            variant="light"
+            className="mb-2"
+            disabled={item.disabled}
+          >
+            {item.name}
+          </Button>
+        ))}
+      </Nav>
+    </Container>
+  );
+};
+
+export default Sidebar;
