@@ -19,8 +19,10 @@ const Sidebar = () => {
   };
 
   return (
-    <Container fluid className="d-flex p-0" style={{ height: "100vh" }}>
-      <Nav className="flex-column bg-dark p-3" style={{ width: "200px" }}>
+    <Container fluid className="d-flex p-0" style={{ height: "100vh",width: "170px" }}>
+      
+      <Nav   className="d-flex flex-column justify-content-center align-items-center bg-dark p-3"
+      style={{ width: "150px", height: "100vh", position: "fixed", left: 0, top: 0 }}>
         {[
           { name: "Home", path: "/Home1" },
           { name: "Design", path: "/Design1" },
@@ -32,8 +34,10 @@ const Sidebar = () => {
             key={index}
             onClick={() => !item.disabled && handleNavigation(item.path, index)}
             style={{
-              backgroundColor: selected === index ? "#808080" : "#FFCC00",
-              borderColor: selected === index ? "#808080" : "#FFCC00",
+              backgroundColor: selected === index || item.disabled ? "#808080" : "#FFCC00",
+              borderColor: selected === index || item.disabled ? "#808080" : "#FFCC00",
+              width: "120px", // Same width for all buttons
+            height: "40px", // Same height for all buttons
             }}
             variant="light"
             className="mb-2"
