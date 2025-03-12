@@ -233,14 +233,216 @@ const BasicEditPage = () => {
               </Col>
             </Row>
           </Col>
-          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-2 p-3">
-            Section 2
+          <Col className="bg-light text-dark d-flex align-items-center justify-content-center mx-2 p-3">
+            <Row className="w-100 h-100 flex-column gap-2">
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  {/* Project Title Label with Red * */}
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>CN Number</strong>
+                    </Form.Label>
+                  </Col>
+
+                  <Col md="auto">
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter CN# to search"
+                      style={{ backgroundColor: "fff9c4" }}
+                    />
+                  </Col>
+
+                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Enter the CN Number"
+                      disabled
+                      rows={3}
+                      style={{ backgroundColor: "#fff9c4" }} // Light yellow background
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>CN Status</strong>
+                    </Form.Label>
+                  </Col>
+
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      disabled
+                      style={{ backgroundColor: "#fff9c4" }}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>L3 System Impacted</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>Guards & Covers</option>
+                      <option>FFF</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Project Owner</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>Alex Uken</option>
+                      <option>FFF</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Func. Role</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option></option>
+                      <option>FFF</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Proj Team mumbers</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option></option>
+                      <option>GM</option>
+                      <option>FEF</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  {/* Project Title Label with Red * */}
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>Estimated Hours</strong>
+                    </Form.Label>
+                  </Col>
+
+                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
+                  <Col md={12} className="mt-2">
+                    <Form.Control type="text" placeholder="30" rows={3} />
+                  </Col>
+                </Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Status</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option></option>
+                      <option>1</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Mig. Proj. Status</strong>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Control"
+                      disabled
+                      rows={3}
+                      style={{ backgroundColor: "#fff9c4" }}
+                    />
+                  </Form.Group>
+                </Col>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  <Col md="auto">
+                    <Form.Label>
+                      <span style={{ color: "red" }}>*</span>{" "}
+                      <strong>Start Date</strong>
+                    </Form.Label>
+                  </Col>
+
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      type="text"
+                      placeholder="2012-Dec-31"
+                      rows={3}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>Charge Number</strong>
+                    </Form.Label>
+                  </Col>
+
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      type="text"
+                      placeholder="78 TO 100"
+                      style={{ backgroundColor: "#fff9c4" }}
+                      rows={3}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </Col>
-          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-2 p-3">
-            Section 3
+          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-1 p-3">
+            <Row className="w-100 h-100 flex-column gap-1">
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 1
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 2
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 3
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 4
+              </Col>
+            </Row>
           </Col>
-          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-2 p-3">
-            Section 4
+
+          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-1 p-3">
+            <Row className="w-100 h-100 flex-column gap-1">
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 1
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 2
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                Part 3
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>
