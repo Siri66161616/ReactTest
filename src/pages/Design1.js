@@ -1,53 +1,251 @@
-import React, { useState } from "react";
-import { Form, Container } from "react-bootstrap";
+import React from "react";
+import { Form, Container, Row, Col } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const DropdownComponent = () => {
-  // Dropdown data
-  const projects = ["Project1", "Project2", "Project3", "Project4"];
-  const detailsMap = {
-    Project1: ["details1", "concept1", "name1"],
-    Project2: ["details2", "concept2", "name2"],
-    Project3: ["details3", "concept3", "name3"],
-    Project4: ["details4", "concept4", "name4"],
-  };
-
-  const [selectedProject, setSelectedProject] = useState("");
-  const [details, setDetails] = useState([]);
-
-  // Handle first dropdown change
-  const handleProjectChange = (event) => {
-    const selected = event.target.value;
-    setSelectedProject(selected);
-    setDetails(detailsMap[selected] || []);
-  };
-
+const BasicEditPage = () => {
   return (
-    <Container className="mt-4">
-      <h3>Select Project</h3>
-      <Form.Group>
-        <Form.Select value={selectedProject} onChange={handleProjectChange}>
-          <option value="">Select</option>
-          {projects.map((project, index) => (
-            <option key={index} value={project}>
-              {project}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.Group>
+    <>
+      <Container fluid className="vh-100 bg-light">
+        <Row className="h-100 justify-content-between">
+          <Col className="bg-light text-dark text-dark mx-2 p-3 d-flex flex-column">
+            <Row className="w-100 h-100 flex-column gap-2">
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  {/* Project Title Label with Red * */}
+                  <Col md="auto">
+                    <Form.Label>
+                      <span style={{ color: "red" }}>*</span>{" "}
+                      <strong>Project Title</strong>
+                    </Form.Label>
+                  </Col>
 
-      <Form.Group className="mt-3">
-        <h3>Details</h3>
-        <Form.Select disabled={!selectedProject}>
-          <option value="">Select</option>
-          {details.map((detail, index) => (
-            <option key={index} value={detail}>
-              {detail}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.Group>
-    </Container>
+                  {/* Project ID Label */}
+                  <Col md="auto" className="ms-3">
+                    <Form.Label>
+                      <strong>Project ID</strong>
+                    </Form.Label>
+                  </Col>
+
+                  {/* Project ID Input Field (No Space Between Label and Input) */}
+                  <Col md="auto">
+                    <Form.Control
+                      type="text"
+                      value="52"
+                      disabled
+                      style={{ width: "80px", backgroundColor: "#ffcc00" }}
+                    />
+                  </Col>
+
+                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      as="textarea"
+                      placeholder="620 Def Line Changes"
+                      disabled
+                      rows={3}
+                      style={{ backgroundColor: "#fff9c4" }} // Light yellow background
+                    />
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  {/* Project Title Label with Red * */}
+                  <Col md="auto">
+                    <Form.Label>
+                      <span style={{ color: "red" }}>*</span>{" "}
+                      <strong>Description</strong>
+                    </Form.Label>
+                  </Col>
+
+                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Change to def life mounting hardware to go with EIC changes to def line group"
+                      rows={3}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col md={5}>
+                  <Form.Label>
+                    <strong>Part Numbers</strong>
+                  </Form.Label>
+                </Col>
+
+                <Col md={7}>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter part to search"
+                  />
+                </Col>
+              </Col>
+
+              <Row className="mb-4">
+                <Form.Group as={Col} controlId="withoutCN">
+                  <Form.Label>
+                    <strong>Without CN#</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Parts witn no CN"
+                    style={{ backgroundColor: "#fff9c4" }}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="withCN">
+                  <Form.Label>
+                    <strong>With CN#</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="parts with CN"
+                    style={{ backgroundColor: "#fff9c4" }}
+                  />
+                </Form.Group>
+              </Row>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Primary Proj. Type</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>GM</option>
+                      <option>FFF</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Sec. Proj. Type</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>FFF</option>
+                      <option>GM</option>
+                      <option>FEF</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Umbrella Project</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>WTS</option>
+                      <option>Maintenace</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Priority</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>Noramal</option>
+                      <option>Difficult</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  {/* Project Title Label with Red * */}
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>Umbrella Status</strong>
+                    </Form.Label>
+                  </Col>
+
+                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      type="text"
+                      placeholder="Active"
+                      disabled
+                      rows={3}
+                      style={{ backgroundColor: "#fff9c4" }}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Product Group</strong>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="WTS"
+                      disabled
+                      rows={3}
+                      style={{ backgroundColor: "#fff9c4" }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col className="mb-3">
+                  <Form.Group as={Col}>
+                    <Form.Label>
+                      <strong>Machine Model</strong>
+                    </Form.Label>
+                    <Form.Select>
+                      <option>620</option>
+                      <option>830</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Col>
+
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center">
+                  {/* Project Title Label with Red * */}
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>Unique #</strong>
+                    </Form.Label>
+                  </Col>
+
+                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      type="text"
+                      placeholder=" "
+                      disabled
+                      rows={3}
+                      style={{ backgroundColor: "#fff9c4" }}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-2 p-3">
+            Section 2
+          </Col>
+          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-2 p-3">
+            Section 3
+          </Col>
+          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-2 p-3">
+            Section 4
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
-export default DropdownComponent;
+export default BasicEditPage;
