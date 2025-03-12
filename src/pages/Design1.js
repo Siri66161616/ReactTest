@@ -7,7 +7,7 @@ const BasicEditPage = () => {
     <>
       <Container fluid className="vh-100 bg-light">
         <Row className="h-100 justify-content-between">
-          <Col className="bg-light text-dark text-dark mx-2 p-3 d-flex flex-column">
+          <Col className="bg-light text-dark text-dark p-3 d-flex flex-column">
             <Row className="w-100 h-100 flex-column gap-2">
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
@@ -233,7 +233,7 @@ const BasicEditPage = () => {
               </Col>
             </Row>
           </Col>
-          <Col className="bg-light text-dark d-flex align-items-center justify-content-center mx-2 p-3">
+          <Col className="bg-light text-dark d-flex align-items-center justify-content-center p-3">
             <Row className="w-100 h-100 flex-column gap-2">
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
@@ -414,7 +414,7 @@ const BasicEditPage = () => {
               </Col>
             </Row>
           </Col>
-          <Col className="bg-light text-dark d-flex align-items-center justify-content-center mx-1 p-3">
+          <Col className="bg-light text-dark d-flex align-items-center justify-content-center p-3">
             <Row className="w-100 h-100 flex-column gap-1">
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
@@ -462,7 +462,6 @@ const BasicEditPage = () => {
                     </Form.Label>
                   </Col>
 
-                  {/* Project ID Input Field (No Space Between Label and Input) */}
                   <Col md="auto">
                     <Form.Control
                       type="text"
@@ -472,7 +471,6 @@ const BasicEditPage = () => {
                     />
                   </Col>
 
-                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
                   <Col md={12} className="mt-2">
                     <Form.Control
                       as="textarea"
@@ -485,58 +483,175 @@ const BasicEditPage = () => {
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
-                  <Row className="mb-3 align-items-center">
-                    <Form.Control type="text" value="Message Reply" disabled />
+                  <Col md={12}>
+                    <Form.Control
+                      type="text"
+                      value="Message Reply"
+                      disabled
+                      className="mb-2"
+                    />
+                  </Col>
+
+                  <Col md={12}>
                     <Form.Label>
-                      <strong>Select User to tag</strong>
+                      <strong>Select User to Tag</strong>
                     </Form.Label>
-                    <Form.Select>
+                    <Form.Select className="mb-2">
                       <option>Find User</option>
                       <option>FFF</option>
                     </Form.Select>
+                  </Col>
 
+                  <Col md={12}>
+                    <Form.Label>
+                      <strong>Enter Your Message</strong>
+                    </Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      placeholder="Enter your message here"
+                      rows={3}
+                      className="mb-3"
+                    />
+                  </Col>
+
+                  <Row className="mt-3">
                     <Col md="auto">
-                      <Form.Label>
-                        <strong>Enter your message</strong>
-                      </Form.Label>
+                      <Button type="submit" variant="warning">
+                        Post
+                      </Button>
                     </Col>
-
-                    <Col md={12} className="mt-2">
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Enter your message here"
-                        rows={3}
-                      />
+                    <Col md="auto">
+                      <Button type="submit" variant="warning">
+                        Teams Message Link
+                      </Button>
                     </Col>
-
-                    <Row className="mt-3">
-                      <Col md="auto">
-                        <Button type="submit" variant="warning">
-                          Post
-                        </Button>
-                      </Col>
-                      <Col md="auto">
-                        <Button type="submit" variant="warning">
-                          Teams Message Link
-                        </Button>
-                      </Col>
-                    </Row>
                   </Row>
                 </Row>
               </Col>
             </Row>
           </Col>
 
-          <Col className="bg-white text-dark d-flex align-items-center justify-content-center mx-1 p-3">
+          <Col className="bg-light text-dark d-flex align-items-center justify-content-center p-3">
             <Row className="w-100 h-100 flex-column gap-1">
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                Part 1
+                <Row className="mb-3 align-items-center">
+                  <Col md="auto" className="ms-2">
+                    <Form.Label>
+                      <strong>Child Project Details</strong>
+                    </Form.Label>
+                  </Col>
+
+                  <Col md="auto">
+                    <Form.Control
+                      type="text"
+                      value="Link Child Projects"
+                      disabled
+                      style={{ backgroundColor: "#d6d6d6" }}
+                    />
+                  </Col>
+                  <Col md="auto">
+                    <Form.Control
+                      type="text"
+                      value="Add Child Projects"
+                      disabled
+                      style={{ backgroundColor: "#d6d6d6" }}
+                    />
+                  </Col>
+
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      as="textarea"
+                      placeholder="ID     PROJECT TITLE     STATUS"
+                      rows={8}
+                    />
+                  </Col>
+                </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                Part 2
+                <Row className="mb-3 align-items-center">
+                  <Col md="auto" className="ms-2">
+                    <Form.Label>
+                      <strong>Add Project Links</strong>
+                    </Form.Label>
+                  </Col>
+
+                  <Col md="auto">
+                    <Form.Control
+                      type="text"
+                      value="Click here to add links"
+                      disabled
+                      style={{ backgroundColor: "#d6d6d6" }}
+                    />
+                  </Col>
+
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      as="textarea"
+                      placeholder=""
+                      rows={4}
+                      style={{ backgroundColor: "#f0f0f0" }}
+                    />
+                  </Col>
+                </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                Part 3
+                <Col className="mt-3">
+                  <Row className="mb-2 d-flex justify-content-center">
+                    <Button
+                      type="submit"
+                      variant="secondary"
+                      style={{
+                        width: "200px",
+                        fontWeight: "bold",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      One Note Link
+                    </Button>
+                  </Row>
+                  <Row className="mb-2 d-flex justify-content-center">
+                    <Button
+                      type="submit"
+                      variant="#d6d6d6"
+                      style={{
+                        width: "200px",
+                        fontWeight: "bold",
+                        textDecoration: "underline",
+                        backgroundColor: "#d6d6d6",
+                      }}
+                    >
+                      Add VPD Project
+                    </Button>
+                  </Row>
+                  <Row className="mb-2 d-flex justify-content-center">
+                    <Button
+                      type="submit"
+                      variant="fff9c4"
+                      style={{
+                        width: "200px",
+                        fontWeight: "bold",
+                        textDecoration: "underline",
+                        backgroundColor: "#fff9c4",
+                      }}
+                    >
+                      Project Email Link
+                    </Button>
+                  </Row>
+                  <Row className="d-flex justify-content-center">
+                    <Button
+                      type="submit"
+                      variant="#fff9c4"
+                      style={{
+                        width: "200px",
+                        fontWeight: "bold",
+                        textDecoration: "underline",
+                        backgroundColor: "#fff9c4",
+                      }}
+                    >
+                      Transit BIO Data
+                    </Button>
+                  </Row>
+                </Col>
               </Col>
             </Row>
           </Col>
