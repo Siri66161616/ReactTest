@@ -6,7 +6,9 @@ import {
   InputGroup,
   FormControl,
   Table,
-} from "react-bootstrap";
+  Button,
+  } from "react-bootstrap";
+  import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 
 function Home1() {
@@ -19,7 +21,11 @@ function Home1() {
         title: `Project ${i}`,
         number: `100${i}`,
         status: i % 2 === 0 ? "Active" : "Pending",
-        action: "Edit",
+        action: (
+          <Link to="/Design1">
+            <Button variant="primary" size="sm">Edit</Button>
+          </Link>
+        ),
       });
     }
     return data;

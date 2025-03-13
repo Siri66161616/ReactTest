@@ -7,6 +7,7 @@ import Home1 from "./pages/Home1";
 import Admin from "./pages/Admin1";
 import Feed from "./pages/Feed";
 import Design from "./pages/Design1";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState("Shirisha");

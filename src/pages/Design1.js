@@ -30,9 +30,9 @@ const BasicEditPage = () => {
                   <Col md="auto">
                     <Form.Control
                       type="text"
-                      value="52"
+                      value="1"
                       disabled
-                      style={{ width: "80px", backgroundColor: "#ffcc00" }}
+                      style={{ width: "50px", backgroundColor: "#ffcc00" }}
                     />
                   </Col>
 
@@ -40,7 +40,7 @@ const BasicEditPage = () => {
                   <Col md={12} className="mt-2">
                     <Form.Control
                       as="textarea"
-                      placeholder="620 Def Line Changes"
+                      placeholder="Project1"
                       disabled
                       rows={3}
                       style={{ backgroundColor: "#fff9c4" }} // Light yellow background
@@ -116,8 +116,10 @@ const BasicEditPage = () => {
                       <strong>Primary Proj. Type</strong>
                     </Form.Label>
                     <Form.Select>
+                      <option>BIQ</option>
+                      <option>CPI</option>
+                      <option>NPI</option>
                       <option>GM</option>
-                      <option>FFF</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -127,9 +129,9 @@ const BasicEditPage = () => {
                       <strong>Sec. Proj. Type</strong>
                     </Form.Label>
                     <Form.Select>
-                      <option>FFF</option>
-                      <option>GM</option>
-                      <option>FEF</option>
+                      <option>NA</option>
+                      <option>Deviation</option>
+                      <option>NFFF</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -349,51 +351,41 @@ const BasicEditPage = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Col className="mb-3">
-                  <Form.Group as={Col}>
+              <Row className="mb-3">
+                {/* Left Column: Status & Mig. Proj. Status */}
+                <Col md={12}>
+                  {/* Status Dropdown */}
+                  <Form.Group className="mb-3">
                     <Form.Label>
                       <strong>Status</strong>
                     </Form.Label>
                     <Form.Select>
-                      <option></option>
-                      <option>1</option>
+                      <option>New</option>
+                      <option>Pending Launch</option>
+                      <option>Design</option>
+                      <option>Detail</option>
+                      <option>EDS MCS</option>
+                      <option>CC</option>
+                      <option>CR</option>
                     </Form.Select>
                   </Form.Group>
-                </Col>
-                <Col className="mb-3">
-                  <Form.Group as={Col}>
-                    <Form.Label>
-                      <strong>Mig. Proj. Status</strong>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Control"
-                      disabled
-                      rows={3}
-                      style={{ backgroundColor: "#fff9c4" }}
-                    />
-                  </Form.Group>
-                </Col>
-              </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center">
-                  <Col md="auto">
+
+                  
+
+                  {/* Start Date - Now Aligned Below Status */}
+                  <Form.Group className="mb-3">
                     <Form.Label>
                       <span style={{ color: "red" }}>*</span>{" "}
                       <strong>Start Date</strong>
                     </Form.Label>
-                  </Col>
+                    <Form.Control type="date" />
+                  </Form.Group>
+                </Col>
 
-                  <Col md={12} className="mt-2">
-                    <Form.Control
-                      type="text"
-                      placeholder="2012-Dec-31"
-                      rows={3}
-                    />
-                  </Col>
-                </Row>
-              </Col>
+                {/* Right Column (Empty for Balance) */}
+                <Col md={6}></Col>
+              </Row>
+
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   <Col md="auto">
@@ -405,7 +397,7 @@ const BasicEditPage = () => {
                   <Col md={12} className="mt-2">
                     <Form.Control
                       type="text"
-                      placeholder="78 TO 100"
+                      placeholder=""
                       style={{ backgroundColor: "#fff9c4" }}
                       rows={3}
                     />
@@ -420,12 +412,12 @@ const BasicEditPage = () => {
                 <Row className="mb-3 align-items-center">
                   <Col md="auto">
                     <Form.Label>
-                      <strong>Select Date</strong>
+                      <strong>Project Target Date</strong>
                     </Form.Label>
                   </Col>
 
                   <Col md={12} className="mt-2">
-                    <Form.Control type="text" placeholder="" rows={3} />
+                    <Form.Control type="date" placeholder="" rows={3} />
                   </Col>
                 </Row>
               </Col>
@@ -433,7 +425,7 @@ const BasicEditPage = () => {
                 <Row className="mb-4">
                   <Form.Group as={Col} controlId="withoutCN">
                     <Form.Label>
-                      <strong>Part Number Count</strong>
+                      <strong>PartNumberCount</strong>
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -448,210 +440,32 @@ const BasicEditPage = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder=""
+                      placeholder="0"
                       style={{ backgroundColor: "#fff9c4" }}
                     />
                   </Form.Group>
                 </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center">
-                  <Col md="auto" className="ms-2">
-                    <Form.Label>
-                      <strong>Attached Files</strong>
-                    </Form.Label>
-                  </Col>
-
-                  <Col md="auto">
-                    <Form.Control
-                      type="text"
-                      value="Click here to attach files"
-                      disabled
-                      style={{ backgroundColor: "#d6d6d6" }}
-                    />
-                  </Col>
-
-                  <Col md={12} className="mt-2">
-                    <Form.Control
-                      as="textarea"
-                      placeholder=""
-                      rows={6}
-                      style={{ backgroundColor: "#f0f0f0" }}
-                    />
-                  </Col>
-                </Row>
+                <Row className="mb-3 align-items-center"></Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center">
-                  <Col md={12}>
-                    <Form.Control
-                      type="text"
-                      value="Message Reply"
-                      disabled
-                      className="mb-2"
-                    />
-                  </Col>
-
-                  <Col md={12}>
-                    <Form.Label>
-                      <strong>Select User to Tag</strong>
-                    </Form.Label>
-                    <Form.Select className="mb-2">
-                      <option>Find User</option>
-                      <option>FFF</option>
-                    </Form.Select>
-                  </Col>
-
-                  <Col md={12}>
-                    <Form.Label>
-                      <strong>Enter Your Message</strong>
-                    </Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      placeholder="Enter your message here"
-                      rows={3}
-                      className="mb-3"
-                    />
-                  </Col>
-
-                  <Row className="mt-3">
-                    <Col md="auto">
-                      <Button type="submit" variant="warning">
-                        Post
-                      </Button>
-                    </Col>
-                    <Col md="auto">
-                      <Button type="submit" variant="warning">
-                        Teams Message Link
-                      </Button>
-                    </Col>
-                  </Row>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col className="bg-light text-dark d-flex align-items-center justify-content-center p-3">
-            <Row className="w-100 h-100 flex-column gap-1">
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center">
-                  <Col md="auto" className="ms-2">
-                    <Form.Label>
-                      <strong>Child Project Details</strong>
-                    </Form.Label>
-                  </Col>
-
-                  <Col md="auto">
-                    <Form.Control
-                      type="text"
-                      value="Link Child Projects"
-                      disabled
-                      style={{ backgroundColor: "#d6d6d6" }}
-                    />
-                  </Col>
-                  <Col md="auto">
-                    <Form.Control
-                      type="text"
-                      value="Add Child Projects"
-                      disabled
-                      style={{ backgroundColor: "#d6d6d6" }}
-                    />
-                  </Col>
-
-                  <Col md={12} className="mt-2">
-                    <Form.Control
-                      as="textarea"
-                      placeholder="ID     PROJECT TITLE     STATUS"
-                      rows={8}
-                    />
-                  </Col>
-                </Row>
+                <Row className="mb-3 align-items-center"></Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center">
-                  <Col md="auto" className="ms-2">
-                    <Form.Label>
-                      <strong>Add Project Links</strong>
-                    </Form.Label>
-                  </Col>
-
-                  <Col md="auto">
-                    <Form.Control
-                      type="text"
-                      value="Click here to add links"
-                      disabled
-                      style={{ backgroundColor: "#d6d6d6" }}
-                    />
-                  </Col>
-
-                  <Col md={12} className="mt-2">
-                    <Form.Control
-                      as="textarea"
-                      placeholder=""
-                      rows={4}
-                      style={{ backgroundColor: "#f0f0f0" }}
-                    />
-                  </Col>
-                </Row>
+                <Row className="mb-3 align-items-center"></Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Col className="mt-3">
-                  <Row className="mb-2 d-flex justify-content-center">
-                    <Button
-                      type="submit"
-                      variant="secondary"
-                      style={{
-                        width: "200px",
-                        fontWeight: "bold",
-                        textDecoration: "underline",
-                      }}
-                    >
-                      One Note Link
-                    </Button>
-                  </Row>
-                  <Row className="mb-2 d-flex justify-content-center">
-                    <Button
-                      type="submit"
-                      variant="#d6d6d6"
-                      style={{
-                        width: "200px",
-                        fontWeight: "bold",
-                        textDecoration: "underline",
-                        backgroundColor: "#d6d6d6",
-                      }}
-                    >
-                      Add VPD Project
-                    </Button>
-                  </Row>
-                  <Row className="mb-2 d-flex justify-content-center">
-                    <Button
-                      type="submit"
-                      variant="fff9c4"
-                      style={{
-                        width: "200px",
-                        fontWeight: "bold",
-                        textDecoration: "underline",
-                        backgroundColor: "#fff9c4",
-                      }}
-                    >
-                      Project Email Link
-                    </Button>
-                  </Row>
-                  <Row className="d-flex justify-content-center">
-                    <Button
-                      type="submit"
-                      variant="#fff9c4"
-                      style={{
-                        width: "200px",
-                        fontWeight: "bold",
-                        textDecoration: "underline",
-                        backgroundColor: "#fff9c4",
-                      }}
-                    >
-                      Transit BIO Data
-                    </Button>
-                  </Row>
-                </Col>
+                <Row className="mb-3 align-items-center"></Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center"></Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center"></Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+                <Row className="mb-3 align-items-center"></Row>
               </Col>
             </Row>
           </Col>
