@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { Button, Form, Container, Row, Col } from "react-bootstrap";
+import { Card, Form, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useProjectData } from "../context/ProjectContext";
+import { ArrowRight } from "react-bootstrap-icons";
 
 const Design1 = () => {
   const { projectData, productGroups } = useProjectData();
+
+  // Function to determine the Start Date label
+  const getStartDateLabel = (status) => {
+    return `${status} Start Date`;
+  };
 
   // State Management
   const [selectedPrimary, setSelectedPrimary] = useState("");
@@ -82,9 +88,89 @@ const Design1 = () => {
     }
   };
 
+  const steps = [
+    "New",
+    "Pending Launch",
+    "Requirements",
+    "Design",
+    "Detail",
+    "EDS/MCS Release",
+    "Closed-Resolved",
+  ];
+
   return (
     <>
       <Container fluid className="vh-100 bg-light">
+        <div
+          className="border-top border-bottom"
+          style={{
+            borderTop: "2px solid black",
+            borderBottom: "2px solid black",
+            padding: "10px 0",
+          }}
+        ></div>
+
+        <Row className=" align-items-center mt-1 mb-1">
+          {/* Project Status Card (Vertical) */}
+          <Col xs="auto" className="d-flex align-items-center">
+            <Card
+              className="p-2 shadow-sm d-flex align-items-center justify-content-center"
+              style={{
+                minWidth: "50px",
+                height: "120px",
+                writingMode: "vertical-rl", // Vertical text direction
+                textAlign: "center",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                transform: "rotate(180deg)",
+              }}
+            >
+              <span>Project Status</span>
+            </Card>
+          </Col>
+          {steps.map((step, index) => (
+            <React.Fragment key={index}>
+              <Col xs="auto" className="d-flex justify-content-center">
+                <Card
+                  className="p-2 shadow-sm d-flex flex-column align-items-center"
+                  style={{ minWidth: "120px", width: "auto", height: "50px" }}
+                >
+                  {/* Lower Section (Now Upper Section) */}
+                  <div
+                    className="w-100 d-flex align-items-center justify-content-center"
+                    style={{ height: "50%", borderBottom: "1px solid #ddd" }}
+                  >
+                    <span style={{ fontSize: "0.85rem" }}>{step}</span>
+                  </div>
+
+                  {/* Upper Section (Now Lower Section) */}
+                  <div
+                    className="w-100 d-flex align-items-center justify-content-center"
+                    style={{ height: "50%" }}
+                  >
+                    <span style={{ fontSize: "0.75rem", fontWeight: "bold" }}>
+                      {" "}
+                    </span>
+                  </div>
+                </Card>
+              </Col>
+
+              {index !== steps.length - 1 && (
+                <Col xs="auto" className="d-flex justify-content-center">
+                  <ArrowRight size={20} className="text-warning" />
+                </Col>
+              )}
+            </React.Fragment>
+          ))}
+        </Row>
+        <div
+          className="border-top "
+          style={{
+            padding: "10px 0",
+          }}
+        ></div>
+
         <Row className="h-100 justify-content-between">
           <Col className="bg-light text-dark text-dark p-3 d-flex flex-column">
             <Row className="w-100 h-100 flex-column gap-2">
@@ -128,7 +214,7 @@ const Design1 = () => {
                 </Row>
               </Col>
 
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   {/* Project Title Label with Red * */}
                   <Col md="auto">
@@ -235,7 +321,7 @@ const Design1 = () => {
                 </Col>
               </Col>
 
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center flex-grow-1">
                 <Col className="mb-3">
                   <Form.Group as={Col}>
                     <Form.Label>
@@ -267,7 +353,7 @@ const Design1 = () => {
                 </Col>
               </Col>
 
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   {/* Project Title Label with Red * */}
                   <Col md="auto">
@@ -324,7 +410,7 @@ const Design1 = () => {
                 </Col>
               </Col>
 
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   {/* Project Title Label with Red * */}
                   <Col md="auto">
@@ -378,7 +464,7 @@ const Design1 = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   <Col md="auto">
                     <Form.Label>
@@ -448,7 +534,7 @@ const Design1 = () => {
                 </Col>
               </Col>
 
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   {/* Project Title Label with Red * */}
                   <Col md="auto">
@@ -485,11 +571,11 @@ const Design1 = () => {
                     </Form.Select>
                   </Form.Group>
 
-                  {/* Start Date - Now Aligned Below Status */}
+                  {/* Dynamic Start Date Field */}
                   <Form.Group className="mb-3">
                     <Form.Label>
                       <span style={{ color: "red" }}>*</span>{" "}
-                      <strong>Start Date</strong>
+                      <strong>{getStartDateLabel(selectedStatus)}</strong>
                     </Form.Label>
                     <Form.Control type="date" />
                   </Form.Group>
@@ -499,7 +585,7 @@ const Design1 = () => {
                 <Col md={6}></Col>
               </Row>
 
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   <Col md="auto">
                     <Form.Label>
@@ -521,7 +607,7 @@ const Design1 = () => {
           </Col>
           <Col className="bg-light text-dark d-flex align-items-center justify-content-center p-3">
             <Row className="w-100 h-100 flex-column gap-1">
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   <Col md="auto">
                     <Form.Label>
@@ -534,7 +620,7 @@ const Design1 = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-4">
                   <Form.Group as={Col} controlId="withoutCN">
                     <Form.Label>
