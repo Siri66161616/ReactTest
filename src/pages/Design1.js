@@ -1,8 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useProjectData } from "../context/ProjectContext";
 
-const BasicEditPage = () => {
+const Design1 = () => {
+  const { projectData, productGroups } = useProjectData();
+
+  // State Management
+  const [selectedPrimary, setSelectedPrimary] = useState("");
+  const [secondaryOptions, setSecondaryOptions] = useState([]);
+  const [selectedSecondary, setSelectedSecondary] = useState("");
+  const [statusOptions, setStatusOptions] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("");
+
+  const [selectedProductGroup, setSelectedProductGroup] = useState("");
+  const [umbrellaOptions, setUmbrellaOptions] = useState([]);
+  const [selectedUmbrella, setSelectedUmbrella] = useState("");
+  const [machineOptions, setMachineOptions] = useState([]);
+  const [selectedMachine, setSelectedMachine] = useState("");
+
+  console.log("Project Data:", projectData); // Debugging output
+
+  const handlePrimaryChange = (e) => {
+    const selectedProjectType = e.target.value;
+    setSelectedPrimary(selectedProjectType);
+
+    const selectedProject = projectData.find(
+      // ✅ Added 'const'
+      (p) => p.projectType === selectedProjectType
+    );
+
+    if (selectedProject) {
+      const options = selectedProject.secondaryProjectType;
+      setSecondaryOptions(options);
+
+      // ✅ If only one secondary option, auto-select it
+      if (selectedProject) {
+        const secOptions = selectedProject.secondaryProjectType;
+        setSecondaryOptions(secOptions);
+        setSelectedSecondary(secOptions.length === 1 ? secOptions[0] : "");
+
+        const statOptions = selectedProject.Status;
+        setStatusOptions(statOptions);
+        setSelectedStatus(""); // Reset status on project type change
+      } else {
+        setSecondaryOptions([]);
+        setSelectedSecondary("");
+        setStatusOptions([]);
+        setSelectedStatus("");
+      }
+    }
+  };
+  // Handle Product Group Change
+  const handleProductGroupChange = (e) => {
+    const selectedGroup = e.target.value;
+    setSelectedProductGroup(selectedGroup);
+
+    const selectedData = productGroups.find(
+      (group) => group.name === selectedGroup
+    );
+
+    if (selectedData) {
+      setUmbrellaOptions(selectedData.umbrellaStatus);
+      setSelectedUmbrella(
+        selectedData.umbrellaStatus.length === 1
+          ? selectedData.umbrellaStatus[0]
+          : ""
+      );
+
+      setMachineOptions(selectedData.machineModel);
+      setSelectedMachine(
+        selectedData.machineModel.length === 1
+          ? selectedData.machineModel[0]
+          : ""
+      );
+    } else {
+      setUmbrellaOptions([]);
+      setSelectedUmbrella("");
+      setMachineOptions([]);
+      setSelectedMachine("");
+    }
+  };
+
   return (
     <>
       <Container fluid className="vh-100 bg-light">
@@ -115,11 +194,19 @@ const BasicEditPage = () => {
                     <Form.Label>
                       <strong>Primary Proj. Type</strong>
                     </Form.Label>
-                    <Form.Select>
-                      <option>BIQ</option>
-                      <option>CPI</option>
-                      <option>NPI</option>
-                      <option>GM</option>
+                    <Form.Select
+                      value={selectedPrimary}
+                      onChange={handlePrimaryChange}
+                    >
+                      <option value="">Select Project Type</option>
+                      {projectData.map((project) => (
+                        <option
+                          key={project.projectType}
+                          value={project.projectType}
+                        >
+                          {project.projectType}
+                        </option>
+                      ))}
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -128,10 +215,21 @@ const BasicEditPage = () => {
                     <Form.Label>
                       <strong>Sec. Proj. Type</strong>
                     </Form.Label>
-                    <Form.Select>
-                      <option>NA</option>
-                      <option>Deviation</option>
-                      <option>NFFF</option>
+                    <Form.Select
+                      value={selectedSecondary}
+                      onChange={(e) => setSelectedSecondary(e.target.value)}
+                      disabled={secondaryOptions.length === 0}
+                    >
+                      <option value="" disabled={secondaryOptions.length === 1}>
+                        {secondaryOptions.length > 1
+                          ? "Select Secondary Type"
+                          : ""}
+                      </option>
+                      {secondaryOptions.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -143,9 +241,16 @@ const BasicEditPage = () => {
                     <Form.Label>
                       <strong>Umbrella Project</strong>
                     </Form.Label>
-                    <Form.Select>
-                      <option>WTS</option>
-                      <option>Maintenace</option>
+                    <Form.Select
+                      value={selectedProductGroup}
+                      onChange={handleProductGroupChange}
+                    >
+                      <option value="">Select Product Group</option>
+                      {productGroups.map((group) => (
+                        <option key={group.name} value={group.name}>
+                          {group.name}
+                        </option>
+                      ))}
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -204,9 +309,16 @@ const BasicEditPage = () => {
                     <Form.Label>
                       <strong>Machine Model</strong>
                     </Form.Label>
-                    <Form.Select>
-                      <option>620</option>
-                      <option>830</option>
+                    <Form.Select
+                      value={selectedMachine}
+                      onChange={(e) => setSelectedMachine(e.target.value)}
+                    >
+                      <option value="">Select Machine Model</option>
+                      {machineOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -359,18 +471,19 @@ const BasicEditPage = () => {
                     <Form.Label>
                       <strong>Status</strong>
                     </Form.Label>
-                    <Form.Select>
-                      <option>New</option>
-                      <option>Pending Launch</option>
-                      <option>Design</option>
-                      <option>Detail</option>
-                      <option>EDS MCS</option>
-                      <option>CC</option>
-                      <option>CR</option>
+                    <Form.Select
+                      value={selectedStatus}
+                      onChange={(e) => setSelectedStatus(e.target.value)}
+                      disabled={statusOptions.length === 0}
+                    >
+                      <option value="">Select Status</option>
+                      {statusOptions.map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
                     </Form.Select>
                   </Form.Group>
-
-                  
 
                   {/* Start Date - Now Aligned Below Status */}
                   <Form.Group className="mb-3">
@@ -475,4 +588,4 @@ const BasicEditPage = () => {
   );
 };
 
-export default BasicEditPage;
+export default Design1;
