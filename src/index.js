@@ -9,7 +9,9 @@ import { ProjectProvider } from "./context/ProjectContext"; // ✅ Import Projec
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ProjectProvider> {/* ✅ Wrap App inside ProjectProvider */}
+    <ProjectProvider>
+      {" "}
+      {/* ✅ Wrap App inside ProjectProvider */}
       <BrowserRouter>
         <App />
       </BrowserRouter>
