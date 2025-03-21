@@ -25,20 +25,27 @@ export const ProjectProvider = ({ children }) => {
     ],
     productGroups: [
       {
-        name: "Group A",
-        umbrellaStatus: ["Active", "Inactive"],
-        machineModel: ["Model X", "Model Y"],
+        productGroup: "OHT",
+        umbrellaProjects: [
+          { name: "773 Kinetic", status: "Active" },
+          { name: "775 Kinetic", status: "Inactive" },
+          { name: "777 Kinetic", status: "Active" },
+          { name: "OHT CPI", status: "Inactive" },
+          { name: "775 BEV", status: "Active" },
+        ],
+        machineModel: ["773", "777", "775", "776"],
       },
       {
-        name: "Group B",
-        umbrellaStatus: ["Pending", "Approved"],
-        machineModel: ["Model Z"],
-      },
-      {
-        name: "Group C",
-        umbrellaStatus: ["New", "Old"],
-        machineModel: ["Model A", "Model B"],
-      },
+        productGroup: "WTS",
+        umbrellaProjects: [
+          { name: "WTS CPI", status: "Active" },
+          { name: "WTS Maintenance", status: "Inactive" },
+          { name: "Hood Support", status: "Active" },
+          { name: "WTS Bowl Sourcing", status: "Inactive" },
+          { name: "WTS AOS", status: "Active" },
+        ],
+        machineModel: ["620", "630", "650", "670"],
+      }
     ],
   }), []);
 
