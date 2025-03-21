@@ -19,11 +19,11 @@ const Design1 = () => {
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
 
+  const [selectedUmbrellaProject, setSelectedUmbrellaProject] = useState("");
   const [selectedProductGroup, setSelectedProductGroup] = useState("");
-  const [umbrellaOptions, setUmbrellaOptions] = useState([]);
-  const [selectedUmbrella, setSelectedUmbrella] = useState("");
-  const [machineOptions, setMachineOptions] = useState([]);
-  const [selectedMachine, setSelectedMachine] = useState("");
+  const [selectedUmbrellaStatus, setSelectedUmbrellaStatus] = useState("");
+  const [machineModelOptions, setMachineModelOptions] = useState([]);
+  const [selectedMachineModel, setSelectedMachineModel] = useState("");
 
   console.log("Project Data:", projectData); // Debugging output
 
@@ -58,36 +58,37 @@ const Design1 = () => {
     }
   };
   // Handle Product Group Change
-  const handleProductGroupChange = (e) => {
-    const selectedGroup = e.target.value;
-    setSelectedProductGroup(selectedGroup);
+  const handleUmbrellaProjectChange = (e) => {
+    const selectedProjectName = e.target.value;
+    setSelectedUmbrellaProject(selectedProjectName);
 
-    const selectedData = productGroups.find(
-      (group) => group.name === selectedGroup
+    // Find the product group that contains the selected umbrella project
+    const foundProductGroup = productGroups.find((group) =>
+      group.umbrellaProjects.some(
+        (project) => project.name === selectedProjectName
+      )
     );
 
-    if (selectedData) {
-      setUmbrellaOptions(selectedData.umbrellaStatus);
-      setSelectedUmbrella(
-        selectedData.umbrellaStatus.length === 1
-          ? selectedData.umbrellaStatus[0]
-          : ""
-      );
+    if (foundProductGroup) {
+      setSelectedProductGroup(foundProductGroup.productGroup); // Update Product Group
 
-      setMachineOptions(selectedData.machineModel);
-      setSelectedMachine(
-        selectedData.machineModel.length === 1
-          ? selectedData.machineModel[0]
-          : ""
+      // Find the selected umbrella project's status
+      const foundProject = foundProductGroup.umbrellaProjects.find(
+        (project) => project.name === selectedProjectName
       );
+      setSelectedUmbrellaStatus(foundProject ? foundProject.status : "");
+
+      // Set machine model options based on the product group
+      setMachineModelOptions(foundProductGroup.machineModel);
+      setSelectedMachineModel(""); // Reset machine model selection
     } else {
-      setUmbrellaOptions([]);
-      setSelectedUmbrella("");
-      setMachineOptions([]);
-      setSelectedMachine("");
+      // Reset fields if no matching project found
+      setSelectedProductGroup("");
+      setSelectedUmbrellaStatus("");
+      setMachineModelOptions([]);
+      setSelectedMachineModel("");
     }
   };
-
   return (
     <>
       <Container fluid className="vh-100 bg-light">
@@ -96,7 +97,7 @@ const Design1 = () => {
           style={{
             borderTop: "2px solid black",
             borderBottom: "2px solid black",
-            padding: "10px 0",
+            padding: "2px 0",
           }}
         ></div>
 
@@ -106,8 +107,8 @@ const Design1 = () => {
             <Card
               className="p-2 shadow-sm d-flex align-items-center justify-content-center"
               style={{
-                minWidth: "50px",
-                height: "120px",
+                minWidth: "20px",
+                height: "80px",
                 writingMode: "vertical-rl", // Vertical text direction
                 textAlign: "center",
                 fontWeight: "bold",
@@ -321,15 +322,17 @@ const Design1 = () => {
                       <strong>Umbrella Project</strong>
                     </Form.Label>
                     <Form.Select
-                      value={selectedProductGroup}
-                      onChange={handleProductGroupChange}
+                      value={selectedUmbrellaProject}
+                      onChange={handleUmbrellaProjectChange}
                     >
-                      <option value="">Select Product Group</option>
-                      {productGroups.map((group) => (
-                        <option key={group.name} value={group.name}>
-                          {group.name}
-                        </option>
-                      ))}
+                      <option value="">Select Umbrella Project</option>
+                      {productGroups.flatMap((group) =>
+                        group.umbrellaProjects.map((project) => (
+                          <option key={project.name} value={project.name}>
+                            {project.name}
+                          </option>
+                        ))
+                      )}
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -339,8 +342,9 @@ const Design1 = () => {
                       <strong>Priority</strong>
                     </Form.Label>
                     <Form.Select>
-                      <option>Noramal</option>
-                      <option>Difficult</option>
+                      <option>High</option>
+                      <option>Medium</option>
+                      <option>Low</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -359,10 +363,13 @@ const Design1 = () => {
                   <Col md={12} className="mt-2">
                     <Form.Control
                       type="text"
-                      placeholder="Active"
-                      disabled
-                      rows={3}
-                      style={{ backgroundColor: "#fff9c4" }}
+                      value={selectedUmbrellaStatus}
+                      placeholder="Auto-filled"
+                      readOnly
+                      style={{
+                        backgroundColor: "#f8f9fa",
+                        cursor: "not-allowed",
+                      }}
                     />
                   </Col>
                 </Row>
@@ -376,10 +383,13 @@ const Design1 = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      placeholder="WTS"
-                      disabled
-                      rows={3}
-                      style={{ backgroundColor: "#fff9c4" }}
+                      value={selectedProductGroup}
+                      placeholder="Auto-filled"
+                      readOnly
+                      style={{
+                        backgroundColor: "#f8f9fa",
+                        cursor: "not-allowed",
+                      }}
                     />
                   </Form.Group>
                 </Col>
@@ -389,13 +399,14 @@ const Design1 = () => {
                       <strong>Machine Model</strong>
                     </Form.Label>
                     <Form.Select
-                      value={selectedMachine}
-                      onChange={(e) => setSelectedMachine(e.target.value)}
+                      value={selectedMachineModel}
+                      onChange={(e) => setSelectedMachineModel(e.target.value)}
+                      disabled={machineModelOptions.length === 0}
                     >
                       <option value="">Select Machine Model</option>
-                      {machineOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                          {option}
+                      {machineModelOptions.map((model, index) => (
+                        <option key={index} value={model}>
+                          {model}
                         </option>
                       ))}
                     </Form.Select>
@@ -639,13 +650,53 @@ const Design1 = () => {
                 </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center"></Row>
+                <Row className="mb-3 align-items-center">
+                  <Col md="auto">
+                    <Form.Label>
+                      <strong>STD. Req Check</strong>
+                    </Form.Label>
+                  </Col>
+                  <Col md={12} className="mt-2">
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter STD. Req Check"
+                    />
+                  </Col>
+                </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center"></Row>
+                <Row className="mb-3 align-items-center">
+                  <Row className="mb-3 align-items-center">
+                    <Col md="auto">
+                      <Form.Label>
+                        <strong>STD. Design Check</strong>
+                      </Form.Label>
+                    </Col>
+                    <Col md={12} className="mt-2">
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter STD. Design Check"
+                      />
+                    </Col>
+                  </Row>
+                </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
-                <Row className="mb-3 align-items-center"></Row>
+                <Row className="mb-4 align-items-center">
+                  <Row className="mb-4 align-items-center">
+                    <Col md="auto">
+                      <Form.Label>
+                        <strong>STD. Detail Check</strong>
+                      </Form.Label>
+                    </Col>
+                    <Col md={12} className="mt-2">
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter STD. Detail Check"
+                      />
+                    </Col>
+                  </Row>
+                </Row>
               </Col>
               <Col className="d-flex align-items-center justify-content-center flex-grow-1">
                 <Row className="mb-3 align-items-center"></Row>
