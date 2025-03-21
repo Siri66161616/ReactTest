@@ -88,16 +88,6 @@ const Design1 = () => {
     }
   };
 
-  const steps = [
-    "New",
-    "Pending Launch",
-    "Requirements",
-    "Design",
-    "Detail",
-    "EDS/MCS Release",
-    "Closed-Resolved",
-  ];
-
   return (
     <>
       <Container fluid className="vh-100 bg-light">
@@ -110,7 +100,7 @@ const Design1 = () => {
           }}
         ></div>
 
-        <Row className=" align-items-center mt-1 mb-1">
+        <Row className="align-items-center mt-1 mb-1">
           {/* Project Status Card (Vertical) */}
           <Col xs="auto" className="d-flex align-items-center">
             <Card
@@ -121,30 +111,28 @@ const Design1 = () => {
                 writingMode: "vertical-rl", // Vertical text direction
                 textAlign: "center",
                 fontWeight: "bold",
-                display: "flex",
-                justifyContent: "center",
                 transform: "rotate(180deg)",
               }}
             >
               <span>Project Status</span>
             </Card>
           </Col>
-          {steps.map((step, index) => (
+          {statusOptions.map((status, index) => (
             <React.Fragment key={index}>
               <Col xs="auto" className="d-flex justify-content-center">
                 <Card
                   className="p-2 shadow-sm d-flex flex-column align-items-center"
                   style={{ minWidth: "120px", width: "auto", height: "50px" }}
                 >
-                  {/* Lower Section (Now Upper Section) */}
+                  {/* Upper Section */}
                   <div
                     className="w-100 d-flex align-items-center justify-content-center"
                     style={{ height: "50%", borderBottom: "1px solid #ddd" }}
                   >
-                    <span style={{ fontSize: "0.85rem" }}>{step}</span>
+                    <span style={{ fontSize: "0.85rem" }}>{status}</span>
                   </div>
 
-                  {/* Upper Section (Now Lower Section) */}
+                  {/* Lower Section */}
                   <div
                     className="w-100 d-flex align-items-center justify-content-center"
                     style={{ height: "50%" }}
@@ -156,8 +144,13 @@ const Design1 = () => {
                 </Card>
               </Col>
 
-              {index !== steps.length - 1 && (
-                <Col xs="auto" className="d-flex justify-content-center">
+              {/* Add arrow except after the last card */}
+              {index !== statusOptions.length - 1 && (
+                <Col
+                  xs="auto"
+                  className="d-flex justify-content-center"
+                  style={{ margin: "0 2px" }}
+                >
                   <ArrowRight size={20} className="text-warning" />
                 </Col>
               )}
