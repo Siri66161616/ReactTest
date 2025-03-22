@@ -649,7 +649,7 @@ const Design1 = () => {
                   </Form.Group>
                 </Row>
               </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   <Col md="auto">
                     <Form.Label>
@@ -664,7 +664,7 @@ const Design1 = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
                   <Row className="mb-3 align-items-center">
                     <Col md="auto">
@@ -681,7 +681,7 @@ const Design1 = () => {
                   </Row>
                 </Row>
               </Col>
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-4 align-items-center">
                   <Row className="mb-4 align-items-center">
                     <Col md="auto">
