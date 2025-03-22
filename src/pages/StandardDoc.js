@@ -10,18 +10,21 @@ import {
 import { FaChevronDown } from "react-icons/fa";
 
 const StandardDoc = () => {
+  // State to manage collapsible sections
   const [open, setOpen] = useState({
     check1: false,
     check2: false,
     check3: false,
   });
 
+  // Function to toggle collapse state for check1 only
   const toggleCollapse = (key) => {
     if (key === "check1") {
       setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
     }
   };
 
+  // Sample data for the table
   const data = [
     {
       category: "COMMONALITY",
@@ -55,6 +58,7 @@ const StandardDoc = () => {
       className="mt-3 p-3 vh-100"
       style={{ backgroundColor: "black", width: "100vw" }}
     >
+      {/* Header Section */}
       <div
         className="d-flex justify-content-between align-items-center p-2 rounded"
         style={{ backgroundColor: "gold", color: "black" }}
@@ -66,6 +70,7 @@ const StandardDoc = () => {
         </div>
       </div>
 
+      {/* Table and Buttons Section */}
       <div className="d-flex justify-content-between mt-3">
         <Table bordered responsive>
           <thead>
@@ -84,6 +89,7 @@ const StandardDoc = () => {
           </tbody>
         </Table>
 
+        {/* Buttons for Status Information */}
         <div className="d-flex flex-column gap-1 mb-3">
           <div className="d-flex gap-4 w-150">
             <Button
@@ -128,6 +134,7 @@ const StandardDoc = () => {
         </div>
       </div>
 
+      {/* Collapsible Sections */}
       {["check1", "check2", "check3"].map((item, index) => (
         <Card className="mt-3" key={index}>
           <Button
@@ -138,7 +145,7 @@ const StandardDoc = () => {
             }}
             className="w-100 text-start p-3 d-flex align-items-center"
             onClick={() => toggleCollapse(item)}
-            disabled={item !== "check1"}
+            disabled={item !== "check1"} // Only check1 is clickable
           >
             <span className="flex-grow-1">
               {item.charAt(0).toUpperCase() + item.slice(1)}
