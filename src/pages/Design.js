@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Card, Form, Container, Row, Col } from "react-bootstrap";
+import {
+  Card,
+  Form,
+  Container,
+  Row,
+  Col,
+  Button,
+  Toast,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useProjectData } from "../context/ProjectContext";
 import { ArrowRight } from "react-bootstrap-icons";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Design1 = () => {
   const { projectData, productGroups } = useProjectData();
@@ -11,6 +19,13 @@ const Design1 = () => {
   // Function to determine the Start Date label
   const getStartDateLabel = (status) => {
     return `${status} Start Date`;
+  };
+
+  const [showToast, setShowToast] = useState(false);
+
+  const handleShowToast = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000); // Auto-hide after 2 seconds
   };
 
   // State Management
@@ -169,18 +184,10 @@ const Design1 = () => {
         <Row className="h-100 justify-content-between">
           <Col className="bg-light text-dark text-dark p-3 d-flex flex-column">
             <Row className="w-100 h-100 flex-column gap-2">
-              <Col className="d-flex align-items-center justify-content-center flex-grow-1">
+              <Col className="d-flex align-items-center  flex-grow-1">
                 <Row className="mb-3 align-items-center">
-                  {/* Project Title Label with Red * */}
-                  <Col md="auto">
-                    <Form.Label>
-                      <span style={{ color: "red" }}>*</span>{" "}
-                      <strong>Project Title</strong>
-                    </Form.Label>
-                  </Col>
-
                   {/* Project ID Label */}
-                  <Col md="auto" className="ms-3">
+                  <Col md="auto" className="ms-1">
                     <Form.Label>
                       <strong>Project ID</strong>
                     </Form.Label>
@@ -193,17 +200,6 @@ const Design1 = () => {
                       value="1"
                       disabled
                       style={{ width: "50px", backgroundColor: "#ffcc00" }}
-                    />
-                  </Col>
-
-                  {/* Full-width Project Title Input Field Below (Bigger Size, 3 Lines) */}
-                  <Col md={12} className="mt-2">
-                    <Form.Control
-                      as="textarea"
-                      placeholder="Project1"
-                      disabled
-                      rows={3}
-                      style={{ backgroundColor: "#fff9c4" }} // Light yellow background
                     />
                   </Col>
                 </Row>
@@ -607,6 +603,45 @@ const Design1 = () => {
                     />
                   </Col>
                 </Row>
+              </Col>
+
+              {/* Toast Message (Above Button) */}
+              {showToast && (
+                <Col md={12} className="d-flex justify-content-center">
+                  <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={2000}
+                    autohide
+                    style={{
+                      position: "absolute",
+                      bottom: "60px", // Adjust this value to move it above the button
+                      zIndex: 1050,
+                      backgroundColor: "#28a745",
+                      color: "white",
+                      padding: "10px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Toast.Body>Updated the details successfully!</Toast.Body>
+                  </Toast>
+                </Col>
+              )}
+
+              {/* New Button to Show Toast */}
+              <Col md={12} className="align-items-center mt-5">
+                <Button
+                  variant="primary"
+                  onClick={handleShowToast}
+                  style={{
+                    backgroundColor: "#FFD700", // Gold Button Background
+                    borderColor: "#DAA520", // Slightly darker gold for border
+                    color: "black", // Text color for contrast
+                    fontWeight: "bold",
+                  }}
+                >
+                  Update Details
+                </Button>
               </Col>
             </Row>
           </Col>
