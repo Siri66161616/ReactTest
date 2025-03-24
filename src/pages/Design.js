@@ -3,7 +3,7 @@ import { Card, Form, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useProjectData } from "../context/ProjectContext";
 import { ArrowRight } from "react-bootstrap-icons";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 const Design1 = () => {
   const { projectData, productGroups } = useProjectData();
