@@ -7,6 +7,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 
 const StandardDoc = () => {
@@ -16,10 +17,11 @@ const StandardDoc = () => {
     check2: false,
     check3: false,
   });
+  const navigate = useNavigate();
 
   // Function to toggle collapse state for check1 only
   const toggleCollapse = (key) => {
-    if (key === "check1") {
+    if (key === "check2") {
       setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
     }
   };
@@ -64,6 +66,10 @@ const StandardDoc = () => {
         style={{ backgroundColor: "gold", color: "black" }}
       >
         <div className="ms-auto">
+          <Button variant="light" size="sm" onClick={() => navigate("/design")}>
+            Design
+          </Button>
+
           <Button variant="light" size="sm">
             Standard Work Document
           </Button>
@@ -139,13 +145,13 @@ const StandardDoc = () => {
         <Card className="mt-3" key={index}>
           <Button
             style={{
-              backgroundColor: item === "check1" ? "gold" : "gray",
+              backgroundColor: item === "check2" ? "gold" : "gray",
               color: "black",
               border: "none",
             }}
             className="w-100 text-start p-3 d-flex align-items-center"
             onClick={() => toggleCollapse(item)}
-            disabled={item !== "check1"} // Only check1 is clickable
+            disabled={item !== "check2"} // Only check1 is clickable
           >
             <span className="flex-grow-1">
               {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -159,7 +165,7 @@ const StandardDoc = () => {
           </Button>
           <Collapse in={open[item]}>
             <Card.Body className="bg-light p-4">
-              {item === "check1" && (
+              {item === "check2" && (
                 <Form>
                   <Table bordered responsive>
                     <thead>
