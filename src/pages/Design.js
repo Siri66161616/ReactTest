@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Card,
   Form,
@@ -14,7 +14,8 @@ import { ArrowRight } from "react-bootstrap-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Design1 = () => {
-  const { projectData, productGroups } = useProjectData();
+  const { productGroups } = useProjectData();
+  const { projectData, setProjectData } = useProjectData();
 
   // Function to determine the Start Date label
   const getStartDateLabel = (status) => {
@@ -28,11 +29,19 @@ const Design1 = () => {
     setTimeout(() => setShowToast(false), 2000); // Auto-hide after 2 seconds
   };
 
+  // Extract placeholder values from projectData
+  const stdReqPlaceholder =
+    projectData?.stdReqCheck?.[0] || "Enter STD. Req Check";
+  const stdDesignPlaceholder =
+    projectData?.stdDesignCheck?.[0] || "Enter STD. Design Check";
+  const stdDetailPlaceholder =
+    projectData?.stdDetailCheck?.[0] || "Enter STD. Detail Check";
+
   // State Management
   const [selectedPrimary, setSelectedPrimary] = useState("");
   const [secondaryOptions, setSecondaryOptions] = useState([]);
   const [selectedSecondary, setSelectedSecondary] = useState("");
-  const [statusOptions, setStatusOptions] = useState([]);
+  // const [statusOptions, setStatusOptions] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
 
   const [selectedUmbrellaProject, setSelectedUmbrellaProject] = useState("");
@@ -40,39 +49,83 @@ const Design1 = () => {
   const [selectedUmbrellaStatus, setSelectedUmbrellaStatus] = useState("");
   const [machineModelOptions, setMachineModelOptions] = useState([]);
   const [selectedMachineModel, setSelectedMachineModel] = useState("");
+  const [selectedProjectType, setSelectedProjectType] = useState("");
+  const [statusOptions, setStatusOptions] = useState([]);
 
-  console.log("Project Data:", projectData); // Debugging output
-
-  const handlePrimaryChange = (e) => {
-    const selectedProjectType = e.target.value;
-    setSelectedPrimary(selectedProjectType);
-
+  useEffect(() => {
     const selectedProject = projectData.find(
-      // ✅ Added 'const'
-      (p) => p.projectType === selectedProjectType
+      (project) => project.projectType === selectedProjectType
+    );
+    setStatusOptions(selectedProject?.Status || []);
+  }, [selectedProjectType, projectData]); // Runs when `selectedProjectType` or `projectData` changes
+
+  // Handle Update Details button click
+  const handleUpdateDetails = () => {
+    console.log("Project Data Before Update:", projectData);
+
+    const updatedProjectData = projectData.map((project) => {
+      if (project.projectType === selectedProjectType) {
+        const currentIndex = project.ListOfStatus.indexOf(selectedStatus);
+
+        if (
+          currentIndex !== -1 &&
+          currentIndex < project.ListOfStatus.length - 1
+        ) {
+          const nextStatus = project.ListOfStatus[currentIndex + 1];
+
+          // ✅ Append the next status while keeping previous ones
+          const updatedStatusList = [
+            ...new Set([...project.Status, nextStatus]),
+          ];
+
+          return {
+            ...project,
+            Status: updatedStatusList,
+          };
+        }
+      }
+      return project;
+    });
+
+    setProjectData(updatedProjectData);
+
+    // ✅ Auto-select the latest status for the dropdown
+    const updatedProject = updatedProjectData.find(
+      (project) => project.projectType === selectedProjectType
     );
 
-    if (selectedProject) {
-      const options = selectedProject.secondaryProjectType;
-      setSecondaryOptions(options);
-
-      // ✅ If only one secondary option, auto-select it
-      if (selectedProject) {
-        const secOptions = selectedProject.secondaryProjectType;
-        setSecondaryOptions(secOptions);
-        setSelectedSecondary(secOptions.length === 1 ? secOptions[0] : "");
-
-        const statOptions = selectedProject.Status;
-        setStatusOptions(statOptions);
-        setSelectedStatus(""); // Reset status on project type change
-      } else {
-        setSecondaryOptions([]);
-        setSelectedSecondary("");
-        setStatusOptions([]);
-        setSelectedStatus("");
-      }
+    if (updatedProject) {
+      setStatusOptions(updatedProject.Status);
+      setSelectedStatus(
+        updatedProject.Status[updatedProject.Status.length - 1]
+      ); // ✅ Keep the last selected status
     }
+
+    handleShowToast(); // Show success message
   };
+
+  useEffect(() => {
+    if (selectedProjectType) {
+      const selectedProject = projectData.find(
+        (project) => project.projectType === selectedProjectType
+      );
+
+      if (selectedProject) {
+        setStatusOptions(selectedProject.Status);
+
+        // ✅ Always keep the last status selected
+        if (selectedProject.Status.length > 0) {
+          setSelectedStatus(
+            selectedProject.Status[selectedProject.Status.length - 1]
+          );
+        }
+      }
+    } else {
+      setStatusOptions([]);
+      setSelectedStatus("");
+    }
+  }, [selectedProjectType, projectData]);
+
   // Handle Product Group Change
   const handleUmbrellaProjectChange = (e) => {
     const selectedProjectName = e.target.value;
@@ -273,7 +326,7 @@ const Design1 = () => {
                     </Form.Label>
                     <Form.Select
                       value={selectedPrimary}
-                      onChange={handlePrimaryChange}
+                      onChange={(e) => setSelectedPrimary(e.target.value)}
                     >
                       <option value="">Select Project Type</option>
                       {projectData.map((project) => (
@@ -559,16 +612,22 @@ const Design1 = () => {
                       <strong>Status</strong>
                     </Form.Label>
                     <Form.Select
-                      value={selectedStatus}
+                      value={selectedStatus} // ✅ Controlled value
                       onChange={(e) => setSelectedStatus(e.target.value)}
                       disabled={statusOptions.length === 0}
                     >
-                      <option value="">Select Status</option>
-                      {statusOptions.map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      ))}
+                      {statusOptions.length === 0 ? (
+                        <option value="">No Status Available</option>
+                      ) : (
+                        <>
+                          <option value="">Select Status</option>
+                          {statusOptions.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </>
+                      )}
                     </Form.Select>
                   </Form.Group>
 
@@ -632,7 +691,8 @@ const Design1 = () => {
               <Col md={12} className="align-items-center mt-5">
                 <Button
                   variant="primary"
-                  onClick={handleShowToast}
+                  onClick={handleUpdateDetails}
+                  //  disabled={!selectedProjectType || !selectedStatus}
                   style={{
                     backgroundColor: "#FFD700", // Gold Button Background
                     borderColor: "#DAA520", // Slightly darker gold for border
@@ -693,10 +753,7 @@ const Design1 = () => {
                     </Form.Label>
                   </Col>
                   <Col md={12} className="mt-2">
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter STD. Req Check"
-                    />
+                    <Form.Control type="text" placeholder={stdReqPlaceholder} />
                   </Col>
                 </Row>
               </Col>
@@ -711,7 +768,7 @@ const Design1 = () => {
                     <Col md={12} className="mt-2">
                       <Form.Control
                         type="text"
-                        placeholder="Enter STD. Design Check"
+                        placeholder={stdDesignPlaceholder}
                       />
                     </Col>
                   </Row>
@@ -728,7 +785,7 @@ const Design1 = () => {
                     <Col md={12} className="mt-2">
                       <Form.Control
                         type="text"
-                        placeholder="Enter STD. Detail Check"
+                        placeholder={stdDetailPlaceholder}
                       />
                     </Col>
                   </Row>
