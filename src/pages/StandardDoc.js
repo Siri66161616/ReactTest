@@ -6,6 +6,8 @@ import {
   Card,
   Form,
   Table,
+  Dropdown,
+  DropdownButton,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
@@ -20,10 +22,19 @@ const StandardDoc = () => {
   const navigate = useNavigate();
 
   // Function to toggle collapse state for check1 only
-  const toggleCollapse = (key) => {
-    if (key === "check2") {
-      setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
-    }
+  const toggleCollapse = (item) => {
+    setOpen((prev) => ({ ...prev, [item]: !prev[item] }));
+  };
+
+  // Global state for selected checklist items
+  const [selectedCheckList, setSelectedCheckList] = useState([]);
+
+  // Function to handle checklist selection
+  const handleCheckListSelection = (item, event) => {
+    event.stopPropagation(); // Prevent dropdown from closing
+    setSelectedCheckList((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
   };
 
   // Sample data for the table
@@ -140,22 +151,35 @@ const StandardDoc = () => {
         </div>
       </div>
 
+      {/* Dropdown Section */}
+      <div className="mt-3">
+        <DropdownButton id="dropdown-basic-button" title="CheckList">
+          {["Checklist 1", "Checklist 2", "Checklist 3"].map((item) => (
+            <Dropdown.Item key={item} as="div">
+              <Form.Check
+                type="checkbox"
+                label={item}
+                checked={selectedCheckList.includes(item)}
+                onChange={(e) => handleCheckListSelection(item, e)}
+              />
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+      </div>
+
       {/* Collapsible Sections */}
-      {["check1", "check2", "check3"].map((item, index) => (
+      {selectedCheckList.map((item, index) => (
         <Card className="mt-3" key={index}>
           <Button
             style={{
-              backgroundColor: item === "check2" ? "gold" : "gray",
+              backgroundColor: "gold",
               color: "black",
               border: "none",
             }}
             className="w-100 text-start p-3 d-flex align-items-center"
             onClick={() => toggleCollapse(item)}
-            disabled={item !== "check2"} // Only check1 is clickable
           >
-            <span className="flex-grow-1">
-              {item.charAt(0).toUpperCase() + item.slice(1)}
-            </span>
+            <span className="flex-grow-1">{item}</span>
             <FaChevronDown
               style={{
                 transition: "transform 0.3s",
@@ -165,53 +189,51 @@ const StandardDoc = () => {
           </Button>
           <Collapse in={open[item]}>
             <Card.Body className="bg-light p-4">
-              {item === "check2" && (
-                <Form>
-                  <Table bordered responsive>
-                    <thead>
-                      <tr>
-                        <th>Sub-Category</th>
-                        <th>Check to be performed</th>
-                        <th>Standard Work Check Status</th>
-                        <th>Documented Outcome</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.category}</td>
-                          <td>{item.question}</td>
-                          <td>
-                            <Form>
-                              <Form.Check
-                                type="radio"
-                                label="Met"
-                                name={`status-${index}`}
-                              />
-                              <Form.Check
-                                type="radio"
-                                label="NotMet"
-                                name={`status-${index}`}
-                              />
-                              <Form.Check
-                                type="radio"
-                                label="NA"
-                                name={`status-${index}`}
-                              />
-                            </Form>
-                          </td>
-                          <td>
-                            <Form.Control
-                              type="text"
-                              placeholder="Enter your inputs here..."
+              <Form>
+                <Table bordered responsive>
+                  <thead>
+                    <tr>
+                      <th>Sub-Category</th>
+                      <th>Check to be performed</th>
+                      <th>Standard Work Check Status</th>
+                      <th>Documented Outcome</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((entry, index) => (
+                      <tr key={index}>
+                        <td>{entry.category}</td>
+                        <td>{entry.question}</td>
+                        <td>
+                          <Form>
+                            <Form.Check
+                              type="radio"
+                              label="Met"
+                              name={`status-${index}`}
                             />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Form>
-              )}
+                            <Form.Check
+                              type="radio"
+                              label="NotMet"
+                              name={`status-${index}`}
+                            />
+                            <Form.Check
+                              type="radio"
+                              label="NA"
+                              name={`status-${index}`}
+                            />
+                          </Form>
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            placeholder="Enter your inputs here..."
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Form>
             </Card.Body>
           </Collapse>
         </Card>
