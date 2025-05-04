@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "projectreactapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "Raj proj react",
   "publisher": "projectreactapp",
   "public": true,
@@ -41,11 +41,11 @@
     },
     {
       "id": "raj-page",
-      "type": "ms.vss-web.hub",
-      "targets": ["raj-hub-group"],
+      "type": "ms.vss-work-web.work-item-form-control",
+      "targets": ["ms.vss-work-web.work-item-form"],
       "properties": {
         "name": "Raj Page",
-        "order": 100,
+	"height": 50,
         "uri": "dist/index.html"
       }
     },
